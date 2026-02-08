@@ -123,6 +123,15 @@ impl<F, W, const DIGEST_ELEMS: usize> core::ops::Index<usize> for MerkleCap<F, W
     }
 }
 
+impl<F, W, const DIGEST_ELEMS: usize> IntoIterator for MerkleCap<F, W, DIGEST_ELEMS> {
+    type Item = [W; DIGEST_ELEMS];
+    type IntoIter = alloc::vec::IntoIter<[W; DIGEST_ELEMS]>;
+
+    fn into_iter(self) -> Self::IntoIter {
+        self.cap.into_iter()
+    }
+}
+
 impl<F, W, const DIGEST_ELEMS: usize> From<[W; DIGEST_ELEMS]> for Hash<F, W, DIGEST_ELEMS> {
     fn from(value: [W; DIGEST_ELEMS]) -> Self {
         Self {
